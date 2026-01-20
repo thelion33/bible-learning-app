@@ -129,7 +129,7 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <BookOpen className="w-12 h-12 text-purple-600 mx-auto mb-4 animate-pulse" />
+          <BookOpen className="w-12 h-12 text-[#003366] mx-auto mb-4 animate-pulse" />
           <p className="text-gray-600">Loading lesson...</p>
         </div>
       </div>
@@ -160,7 +160,7 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
     const isPerfect = correctAnswers === questions.length
 
     return (
-      <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <Card className="max-w-2xl w-full">
           <CardHeader className="text-center">
             <div className="mb-6">
@@ -169,8 +169,8 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
                   <Trophy className="w-12 h-12 text-yellow-600" />
                 </div>
               ) : (
-                <div className="bg-purple-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto">
-                  <Star className="w-12 h-12 text-purple-600" />
+                <div className="bg-blue-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto">
+                  <Star className="w-12 h-12 text-[#003366]" />
                 </div>
               )}
             </div>
@@ -185,8 +185,8 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-3 gap-4 text-center">
-              <div className="bg-purple-50 p-4 rounded-lg">
-                <p className="text-2xl font-bold text-purple-600">{totalXP}</p>
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <p className="text-2xl font-bold text-[#003366]">{totalXP}</p>
                 <p className="text-sm text-gray-600">XP Earned</p>
               </div>
               <div className="bg-green-50 p-4 rounded-lg">
@@ -206,7 +206,7 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
                   {lesson.key_themes.map((theme, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-sm"
+                      className="px-3 py-1 bg-blue-50 text-[#003366] rounded-full text-sm"
                     >
                       {theme}
                     </span>
@@ -246,7 +246,7 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
   const currentQuestion = questions[currentQuestionIndex]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+    <div className="min-h-screen bg-gray-50">
       <ProgressBar
         current={currentQuestionIndex + 1}
         total={questions.length}

@@ -30,7 +30,7 @@ export default async function LessonsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
@@ -91,13 +91,13 @@ function LessonCard({
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <div className="flex items-center space-x-3 mb-2">
-              <div className={`${isCompleted ? 'bg-green-100' : 'bg-purple-100'} p-2 rounded-lg`}>
+              <div className={`${isCompleted ? 'bg-green-100' : 'bg-blue-100'} p-2 rounded-lg`}>
                 {isLocked ? (
                   <Lock className="w-5 h-5 text-gray-400" />
                 ) : isCompleted ? (
                   <CheckCircle2 className="w-5 h-5 text-green-600" />
                 ) : (
-                  <BookOpen className="w-5 h-5 text-purple-600" />
+                  <BookOpen className="w-5 h-5 text-[#003366]" />
                 )}
               </div>
               <span className="text-sm font-medium text-gray-500">
@@ -151,7 +151,7 @@ function LessonCard({
               {lesson.key_themes.slice(0, 3).map((theme: string, i: number) => (
                 <span
                   key={i}
-                  className="px-3 py-1 bg-purple-50 text-purple-700 rounded-full text-xs font-medium"
+                  className="px-3 py-1 bg-blue-50 text-[#003366] rounded-full text-xs font-medium"
                 >
                   {theme}
                 </span>

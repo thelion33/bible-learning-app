@@ -25,7 +25,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link href="/lessons">
-                <Button size="lg" variant="outline" className="text-base px-8 py-6 border-2 border-white text-white hover:bg-white hover:text-[#001f3f] font-semibold transition-all">
+                <Button size="lg" className="text-base px-8 py-6 border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#001f3f] font-semibold transition-all">
                   Browse Lessons
                 </Button>
               </Link>

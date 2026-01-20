@@ -48,7 +48,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -76,10 +76,10 @@ export default async function DashboardPage() {
               bgColor="bg-orange-50"
             />
             <StatCard
-              icon={<BookOpen className="w-6 h-6 text-purple-600" />}
+              icon={<BookOpen className="w-6 h-6 text-[#003366]" />}
               label="Lessons Completed"
               value={stats?.lessons_completed || 0}
-              bgColor="bg-purple-50"
+              bgColor="bg-blue-50"
             />
             <StatCard
               icon={<Star className="w-6 h-6 text-blue-600" />}
@@ -218,7 +218,7 @@ function AchievementBadge({
     <div
       className={`p-4 rounded-lg border-2 text-center transition-all ${
         unlocked
-          ? 'border-purple-300 bg-purple-50'
+          ? 'border-blue-300 bg-blue-50'
           : 'border-gray-200 bg-gray-50 opacity-50'
       }`}
     >

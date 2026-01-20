@@ -40,12 +40,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-50 to-white px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-center mb-4">
-            <div className="bg-purple-100 p-3 rounded-full">
-              <BookOpen className="w-8 h-8 text-purple-600" />
+            <div className="bg-blue-100 p-3 rounded-full">
+              <BookOpen className="w-8 h-8 text-[#003366]" />
             </div>
           </div>
           <CardTitle className="text-2xl text-center">Welcome Back</CardTitle>
@@ -95,7 +95,7 @@ export default function LoginPage() {
             </Button>
             <p className="text-sm text-center text-gray-600">
               Don&apos;t have an account?{' '}
-              <Link href="/auth/signup" className="text-purple-600 hover:underline font-medium">
+              <Link href="/auth/signup" className="text-[#003366] hover:underline font-medium">
                 Sign up
               </Link>
             </p>
