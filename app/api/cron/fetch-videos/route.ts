@@ -2,7 +2,7 @@
  * API Route: Fetch new YouTube videos
  * 
  * This should be called by a cron job (Railway Cron or similar)
- * to automatically check for new sermon videos
+ * to automatically check for new message videos
  */
 
 import { NextResponse } from 'next/server'

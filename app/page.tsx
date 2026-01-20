@@ -14,7 +14,7 @@ export default function Home() {
               <span className="block mt-2">Prosperity Academy</span>
             </h1>
             <p className="text-lg md:text-xl mb-10 text-gray-200 leading-relaxed max-w-3xl mx-auto">
-              Transform church sermons into engaging, gamified learning experiences
+              Transform church messages into engaging, gamified learning experiences
               for spiritual growth and knowledge retention.
             </p>
             
@@ -45,12 +45,12 @@ export default function Home() {
             <FeatureCard
               icon={<Youtube className="w-12 h-12 text-[#003366]" />}
               title="Auto-Sync Videos"
-              description="Automatically scans Revival Today Church YouTube channel hourly for new sermons"
+              description="Automatically scans Revival Today Church YouTube channel hourly for new messages"
             />
             <FeatureCard
               icon={<BookOpen className="w-12 h-12 text-[#003366]" />}
               title="Personalized Learning"
-              description="Engaging question types tailored to each sermon and user"
+              description="Engaging question types tailored to each message and user"
             />
             <FeatureCard
               icon={<Trophy className="w-12 h-12 text-[#003366]" />}
@@ -74,7 +74,7 @@ export default function Home() {
               Ready to Start Your Journey?
             </h2>
             <p className="text-lg text-gray-600 mb-10 leading-relaxed">
-              Join us in transforming sermon content into actionable spiritual learning.
+              Join us in transforming message content into actionable spiritual learning.
             </p>
             <Link href="/auth/signup">
               <Button size="lg" className="text-base px-10 py-6 bg-[#003366] hover:bg-[#004080] text-white font-semibold shadow-lg hover:shadow-xl transition-all">

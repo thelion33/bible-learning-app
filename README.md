@@ -1,6 +1,6 @@
 # Revival Today Prosperity Academy App
 
-A gamified Bible learning platform that automatically converts church sermons from YouTube into engaging, Duolingo-style learning experiences.
+A gamified Bible learning platform that automatically converts church messages from YouTube into engaging, Duolingo-style learning experiences.
 
 ## 🎯 Core Features
 
@@ -122,7 +122,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 Tables to be created:
 - `videos` - YouTube video metadata
-- `lessons` - Processed sermon content
+- `lessons` - Processed message content
 - `questions` - Quiz questions
 - `users` - User accounts (Supabase Auth)
 - `user_progress` - Individual question attempts

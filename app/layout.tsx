@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Revival Today Prosperity Academy",
-  description: "Learn and grow spiritually through church sermons",
+  description: "Learn and grow spiritually through church messages",
 };
 
 export default function RootLayout({

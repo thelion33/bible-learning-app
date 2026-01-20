@@ -48,7 +48,7 @@ export default async function LessonsPage() {
                 <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-xl font-semibold mb-2">No Lessons Yet</h3>
                 <p className="text-gray-600 mb-6">
-                  Lessons will appear here once sermons are processed.
+                  Lessons will appear here once messages are processed.
                 </p>
                 <Link href="/api/cron/fetch-videos">
                   <Button>Fetch Latest Videos</Button>

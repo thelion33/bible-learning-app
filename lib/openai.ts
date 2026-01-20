@@ -1,6 +1,6 @@
 /**
  * OpenAI Client for Content Generation
- * Processes sermon transcripts into learning materials
+ * Processes message transcripts into learning materials
  */
 
 import OpenAI from 'openai'
@@ -27,18 +27,18 @@ export interface GeneratedQuestion {
 }
 
 /**
- * Generate learning content from a sermon transcript
+ * Generate learning content from a message transcript
  */
 export async function generateLearningContent(
   transcript: string,
   videoTitle: string,
   videoDescription: string
 ): Promise<GeneratedContent> {
-  const prompt = `You are an expert in creating engaging Bible study materials. Analyze the following church sermon and create comprehensive learning content.
+  const prompt = `You are an expert in creating engaging Bible study materials. Analyze the following church message and create comprehensive learning content.
 
-SERMON TITLE: ${videoTitle}
+MESSAGE TITLE: ${videoTitle}
 
-SERMON DESCRIPTION: ${videoDescription}
+MESSAGE DESCRIPTION: ${videoDescription}
 
 TRANSCRIPT:
 ${transcript.slice(0, 15000)} // Limit to ~15k chars to stay within token limits
@@ -62,7 +62,7 @@ Format your response as JSON with this structure:
   "questions": [
     {
       "type": "multiple_choice",
-      "questionText": "What was the main point of the sermon?",
+      "questionText": "What was the main point of the message?",
       "options": ["Option A", "Option B", "Option C", "Option D"],
       "correctAnswer": "Option B",
       "explanation": "The pastor emphasized...",
@@ -70,7 +70,7 @@ Format your response as JSON with this structure:
     },
     {
       "type": "fill_in_blank",
-      "questionText": "The sermon focused on the importance of _____ in our daily walk.",
+      "questionText": "The message focused on the importance of _____ in our daily walk.",
       "correctAnswer": "faith",
       "explanation": "Faith was mentioned as...",
       "xpValue": 15
