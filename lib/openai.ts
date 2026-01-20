@@ -11,6 +11,7 @@ const openai = new OpenAI({
 })
 
 export interface GeneratedContent {
+  lessonTitle: string
   summary: string
   keyThemes: string[]
   scriptureReferences: string[]
@@ -45,10 +46,11 @@ ${transcript.slice(0, 15000)} // Limit to ~15k chars to stay within token limits
 
 Please provide:
 
-1. A concise summary (2-3 paragraphs) of the main message
-2. Key themes (3-5 main themes covered)
-3. Scripture references mentioned (with book, chapter, and verse)
-4. Learning questions in the following types:
+1. A concise, engaging lesson title (4-8 words) that captures the core teaching - NOT the video title
+2. A concise summary (2-3 paragraphs) of the main message
+3. Key themes (3-5 main themes covered)
+4. Scripture references mentioned (with book, chapter, and verse)
+5. Learning questions in the following types:
    - 3 multiple choice questions
    - 2 fill-in-the-blank questions
    - 2 scripture matching questions
@@ -56,6 +58,7 @@ Please provide:
 
 Format your response as JSON with this structure:
 {
+  "lessonTitle": "Walking in Faith and Purpose",
   "summary": "...",
   "keyThemes": ["theme1", "theme2", ...],
   "scriptureReferences": ["John 3:16", "Romans 8:28", ...],

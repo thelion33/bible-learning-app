@@ -112,7 +112,7 @@ export async function GET(request: Request) {
           .from('lessons')
           .insert({
             video_id: newVideo.id,
-            title: video.title,
+            title: content.lessonTitle || video.title, // Use AI-generated title, fallback to video title
             summary: content.summary,
             key_themes: content.keyThemes,
             scripture_references: content.scriptureReferences,
@@ -152,9 +152,9 @@ export async function GET(request: Request) {
           .update({ processed: true })
           .eq('id', newVideo.id)
 
-        console.log(`  ✅ Lesson created: ${video.title} (${content.questions.length} questions)`)
+        console.log(`  ✅ Lesson created: ${content.lessonTitle || video.title} (${content.questions.length} questions)`)
         processedLessons.push({
-          title: video.title,
+          title: content.lessonTitle || video.title,
           questionsCount: content.questions.length,
         })
 

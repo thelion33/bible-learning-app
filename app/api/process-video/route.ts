@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
       .from('lessons')
       .insert({
         video_id: videoId,
-        title: video.title,
+        title: content.lessonTitle || video.title, // Use AI-generated title, fallback to video title
         summary: content.summary,
         key_themes: content.keyThemes,
         scripture_references: content.scriptureReferences,
