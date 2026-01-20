@@ -69,7 +69,7 @@ export async function getPublishedLessons() {
       )
     `)
     .eq('is_published', true)
-    .order('order_index', { ascending: true })
+    .order('created_at', { ascending: false })
 
   if (error) throw error
   return data as any[]
