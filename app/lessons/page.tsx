@@ -151,16 +151,6 @@ function LessonCard({
               </div>
             )}
             
-            {/* Video Description - hide if it duplicates the title */}
-            {lesson.video?.description && 
-             lesson.video.description !== lesson.video.title && 
-             !lesson.video.description.includes(lesson.video.title) &&
-             !lesson.video.title.includes(lesson.video.description) &&
-             lesson.video.description.length > 50 && (
-              <CardDescription className="line-clamp-2 mb-3">
-                {lesson.video.description}
-              </CardDescription>
-            )}
           </div>
         </div>
       </CardHeader>
