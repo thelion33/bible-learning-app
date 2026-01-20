@@ -126,15 +126,27 @@ function LessonCard({
             
             {/* Video Title & Date/Time */}
             {lesson.video?.title && (
-              <div className="mb-3 pb-3 border-b">
-                <p className="text-sm font-medium text-gray-700 mb-1">
+              <div className="mb-3 pb-3 border-b space-y-1">
+                <p className="text-sm font-medium text-gray-700">
                   {lesson.video.title}
                 </p>
                 {formattedDate && (
-                  <div className="flex items-center space-x-2 text-xs text-gray-500">
-                    <Calendar className="w-3 h-3" />
+                  <div className="flex items-center space-x-2 text-sm text-gray-600">
+                    <Calendar className="w-4 h-4" />
                     <span>{formattedDate} at {formattedTime}</span>
                   </div>
+                )}
+                {/* Watch Video Link */}
+                {lesson.video?.youtube_id && (
+                  <a 
+                    href={`https://www.youtube.com/watch?v=${lesson.video.youtube_id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1 text-sm text-[#003366] hover:text-[#004080] font-medium"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    <span>Watch Full Message</span>
+                  </a>
                 )}
               </div>
             )}
@@ -144,19 +156,6 @@ function LessonCard({
               <CardDescription className="line-clamp-2 mb-3">
                 {lesson.video.description}
               </CardDescription>
-            )}
-            
-            {/* Watch Video Link */}
-            {lesson.video?.youtube_id && (
-              <a 
-                href={`https://www.youtube.com/watch?v=${lesson.video.youtube_id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1 text-sm text-[#003366] hover:text-[#004080] font-medium"
-              >
-                <ExternalLink className="w-4 h-4" />
-                <span>Watch Full Message</span>
-              </a>
             )}
           </div>
         </div>
