@@ -1,4 +1,4 @@
-import { BookOpen, Youtube, Sparkles, Trophy } from "lucide-react";
+import { BookOpen, Youtube, Trophy, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -48,19 +48,19 @@ export default function Home() {
               description="Automatically scans Revival Today Church YouTube channel hourly for new sermons"
             />
             <FeatureCard
-              icon={<Sparkles className="w-12 h-12 text-[#003366]" />}
-              title="AI-Powered Content"
-              description="Uses OpenAI to generate summaries, key points, and custom learning questions"
-            />
-            <FeatureCard
               icon={<BookOpen className="w-12 h-12 text-[#003366]" />}
-              title="Duolingo-Style Learning"
-              description="Engaging question types: multiple choice, fill-in-blank, scripture matching"
+              title="Personalized Learning"
+              description="Engaging question types tailored to each sermon and user"
             />
             <FeatureCard
               icon={<Trophy className="w-12 h-12 text-[#003366]" />}
               title="Track Progress"
               description="Earn XP, maintain streaks, and unlock new lessons as you grow"
+            />
+            <FeatureCard
+              icon={<Shield className="w-12 h-12 text-[#003366]" />}
+              title="Defend Your Faith"
+              description="Chat with an AI powered pastor that will teach you to defend your faith and how to bring more followers to Christ"
             />
           </div>
         </div>
