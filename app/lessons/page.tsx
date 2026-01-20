@@ -151,8 +151,8 @@ function LessonCard({
               </div>
             )}
             
-            {/* Video Description */}
-            {lesson.video?.description && (
+            {/* Video Description - only show if different from title */}
+            {lesson.video?.description && lesson.video.description !== lesson.video.title && lesson.video.description.length > 50 && (
               <CardDescription className="line-clamp-2 mb-3">
                 {lesson.video.description}
               </CardDescription>
