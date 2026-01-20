@@ -1,4 +1,4 @@
-# Revival Today Bible Learning App
+# Revival Today Prosperity Academy App
 
 A gamified Bible learning platform that automatically converts church sermons from YouTube into engaging, Duolingo-style learning experiences.
 

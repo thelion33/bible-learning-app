@@ -6,7 +6,7 @@ import { NavBar } from "@/components/NavBar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Revival Today - Bible Learning",
+  title: "Revival Today Prosperity Academy",
   description: "Learn and grow spiritually through church sermons",
 };
 

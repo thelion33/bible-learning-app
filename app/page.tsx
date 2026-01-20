@@ -11,7 +11,7 @@ export default function Home() {
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
               Revival Today
-              <span className="block mt-2">Bible Learning</span>
+              <span className="block mt-2">Prosperity Academy</span>
             </h1>
             <p className="text-lg md:text-xl mb-10 text-gray-200 leading-relaxed max-w-3xl mx-auto">
               Transform church sermons into engaging, gamified learning experiences

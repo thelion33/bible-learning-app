@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase-browser'
 import { Button } from './ui/button'
 import { BookOpen, LogOut, User, Home } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 export function NavBar() {
   const [user, setUser] = useState<any>(null)
@@ -37,10 +38,14 @@ export function NavBar() {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-3 hover:opacity-90 transition-opacity">
-            <div className="bg-white p-2 rounded">
-              <BookOpen className="w-5 h-5 text-[#001f3f]" />
-            </div>
-            <span className="font-bold text-lg text-white">Revival Today Learning</span>
+            <Image 
+              src="/revival logo.png" 
+              alt="Revival Today" 
+              width={40} 
+              height={40}
+              className="rounded"
+            />
+            <span className="font-bold text-lg text-white">Revival Today Prosperity Academy</span>
           </Link>
 
           <div className="flex items-center space-x-2">
