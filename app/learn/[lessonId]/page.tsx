@@ -144,7 +144,7 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
             <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">Lesson Not Found</h3>
             <p className="text-gray-600 mb-6">
-              This lesson doesn't have any questions yet.
+              This lesson doesn&apos;t have any questions yet.
             </p>
             <Button onClick={() => router.push('/lessons')}>
               Back to Lessons
