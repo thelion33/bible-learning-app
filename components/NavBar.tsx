@@ -33,32 +33,32 @@ export function NavBar() {
   }
 
   return (
-    <nav className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3">
+    <nav className="bg-blue-900 shadow-lg sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-            <div className="bg-purple-600 p-2 rounded-lg">
-              <BookOpen className="w-5 h-5 text-white" />
+          <Link href="/" className="flex items-center space-x-3 hover:opacity-90 transition-opacity">
+            <div className="bg-yellow-500 p-2 rounded-lg">
+              <BookOpen className="w-6 h-6 text-blue-900" />
             </div>
-            <span className="font-bold text-lg">Revival Today Learning</span>
+            <span className="font-bold text-xl text-white uppercase tracking-wide">Revival Today Learning</span>
           </Link>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
             {user ? (
               <>
                 <Link href="/dashboard">
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" className="text-white hover:bg-blue-800 hover:text-yellow-400 font-semibold uppercase">
                     <Home className="w-4 h-4 mr-2" />
                     Dashboard
                   </Button>
                 </Link>
                 <Link href="/lessons">
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" className="text-white hover:bg-blue-800 hover:text-yellow-400 font-semibold uppercase">
                     <BookOpen className="w-4 h-4 mr-2" />
                     Lessons
                   </Button>
                 </Link>
-                <Button variant="ghost" size="sm" onClick={handleSignOut}>
+                <Button variant="ghost" size="sm" onClick={handleSignOut} className="text-white hover:bg-blue-800 hover:text-yellow-400 font-semibold uppercase">
                   <LogOut className="w-4 h-4 mr-2" />
                   Sign Out
                 </Button>
@@ -66,12 +66,12 @@ export function NavBar() {
             ) : (
               <>
                 <Link href="/auth/login">
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" className="text-white hover:bg-blue-800 hover:text-yellow-400 font-semibold uppercase">
                     Sign In
                   </Button>
                 </Link>
                 <Link href="/auth/signup">
-                  <Button size="sm">
+                  <Button size="sm" className="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold uppercase">
                     Get Started
                   </Button>
                 </Link>
