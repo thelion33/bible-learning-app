@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { BookOpen, Clock, CheckCircle2, Lock } from 'lucide-react'
+import { BookOpen, Clock, CheckCircle2, Lock, Calendar, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import { getPublishedLessons } from '@/lib/database'
 import { getServerUser } from '@/lib/auth'
@@ -85,6 +85,19 @@ function LessonCard({
   isLocked: boolean
   isCompleted: boolean
 }) {
+  const videoDate = lesson.video?.published_at ? new Date(lesson.video.published_at) : null
+  const formattedDate = videoDate ? videoDate.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }) : null
+  const formattedTime = videoDate ? videoDate.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  }) : null
+  
   return (
     <Card className={`transition-all hover:shadow-lg ${isLocked ? 'opacity-60' : ''} ${isCompleted ? 'border-green-200 bg-green-50/30' : ''}`}>
       <CardHeader>
@@ -109,10 +122,35 @@ function LessonCard({
                 </span>
               )}
             </div>
-            <CardTitle className="text-xl mb-2">{lesson.title}</CardTitle>
-            <CardDescription className="line-clamp-2">
-              {lesson.summary}
-            </CardDescription>
+            <CardTitle className="text-xl mb-3">{lesson.title}</CardTitle>
+            
+            {/* Video Date/Time */}
+            {formattedDate && (
+              <div className="flex items-center space-x-2 text-sm text-gray-600 mb-3">
+                <Calendar className="w-4 h-4" />
+                <span>{formattedDate} at {formattedTime}</span>
+              </div>
+            )}
+            
+            {/* Video Description */}
+            {lesson.video?.description && (
+              <CardDescription className="line-clamp-2 mb-3">
+                {lesson.video.description}
+              </CardDescription>
+            )}
+            
+            {/* Watch Video Link */}
+            {lesson.video?.youtube_id && (
+              <a 
+                href={`https://www.youtube.com/watch?v=${lesson.video.youtube_id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-1 text-sm text-[#003366] hover:text-[#004080] font-medium"
+              >
+                <ExternalLink className="w-4 h-4" />
+                <span>Watch Full Message</span>
+              </a>
+            )}
           </div>
         </div>
       </CardHeader>

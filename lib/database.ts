@@ -58,12 +58,20 @@ export async function markVideoAsProcessed(videoId: string) {
 export async function getPublishedLessons() {
   const { data, error } = await supabase
     .from('lessons')
-    .select('*')
+    .select(`
+      *,
+      video:videos (
+        youtube_id,
+        description,
+        published_at,
+        thumbnail_url
+      )
+    `)
     .eq('is_published', true)
     .order('order_index', { ascending: true })
 
   if (error) throw error
-  return data as Lesson[]
+  return data as any[]
 }
 
 export async function getLessonById(lessonId: string) {
