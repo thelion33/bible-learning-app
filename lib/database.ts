@@ -61,6 +61,7 @@ export async function getPublishedLessons() {
     .select(`
       *,
       video:videos (
+        title,
         youtube_id,
         description,
         published_at,

@@ -124,11 +124,18 @@ function LessonCard({
             </div>
             <CardTitle className="text-xl mb-3">{lesson.title}</CardTitle>
             
-            {/* Video Date/Time */}
-            {formattedDate && (
-              <div className="flex items-center space-x-2 text-sm text-gray-600 mb-3">
-                <Calendar className="w-4 h-4" />
-                <span>{formattedDate} at {formattedTime}</span>
+            {/* Video Title & Date/Time */}
+            {lesson.video?.title && (
+              <div className="mb-3 pb-3 border-b">
+                <p className="text-sm font-medium text-gray-700 mb-1">
+                  {lesson.video.title}
+                </p>
+                {formattedDate && (
+                  <div className="flex items-center space-x-2 text-xs text-gray-500">
+                    <Calendar className="w-3 h-3" />
+                    <span>{formattedDate} at {formattedTime}</span>
+                  </div>
+                )}
               </div>
             )}
             
