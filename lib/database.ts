@@ -72,7 +72,15 @@ export async function getPublishedLessons() {
     .order('created_at', { ascending: false })
 
   if (error) throw error
-  return data as any[]
+  
+  // Sort by video published date (most recent first)
+  const sortedData = data?.sort((a: any, b: any) => {
+    const dateA = a.video?.published_at ? new Date(a.video.published_at).getTime() : 0
+    const dateB = b.video?.published_at ? new Date(b.video.published_at).getTime() : 0
+    return dateB - dateA // Descending order (newest first)
+  })
+  
+  return sortedData as any[]
 }
 
 export async function getLessonById(lessonId: string) {
