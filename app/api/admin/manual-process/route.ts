@@ -52,7 +52,7 @@ export async function GET() {
         const { data: existingVideo } = await supabaseAdmin
           .from('videos')
           .select('youtube_id')
-          .eq('youtube_id', video.youtube_id)
+          .eq('youtube_id', video.id)
           .single()
 
         if (existingVideo) {
@@ -61,7 +61,7 @@ export async function GET() {
         }
 
         // Only process videos newer than cutoff
-        if (new Date(video.published_at) <= new Date(cutoffDate)) {
+        if (new Date(video.publishedAt) <= new Date(cutoffDate)) {
           console.log(`⏭️  Video too old (before ${cutoffDate}): ${video.title}`)
           continue
         }
@@ -72,20 +72,18 @@ export async function GET() {
         const { data: insertedVideo, error: videoError } = await supabaseAdmin
           .from('videos')
           .insert({
-            youtube_id: video.youtube_id,
+            youtube_id: video.id,
             title: video.title,
             description: video.description,
-            published_at: video.published_at,
+            published_at: video.publishedAt,
             duration: video.duration,
-            thumbnail_url: video.thumbnail_url,
-            channel_id: video.channel_id,
-            view_count: video.view_count,
+            thumbnail_url: video.thumbnailUrl,
           })
           .select()
           .single()
 
         if (videoError) {
-          console.error(`❌ Error inserting video ${video.youtube_id}:`, videoError)
+          console.error(`❌ Error inserting video ${video.id}:`, videoError)
           continue
         }
 
@@ -93,7 +91,7 @@ export async function GET() {
 
         // Get transcript
         console.log(`📝 Fetching transcript for: ${video.title}`)
-        const transcript = await getVideoTranscript(video.youtube_id)
+        const transcript = await getVideoTranscript(video.id)
 
         if (!transcript || transcript.length < 100) {
           console.log(`⚠️  No transcript available for ${video.title}`)
@@ -164,7 +162,7 @@ export async function GET() {
           .eq('id', insertedVideo.id)
 
       } catch (error: any) {
-        console.error(`❌ Error processing video ${video.youtube_id}:`, error)
+        console.error(`❌ Error processing video ${video.id}:`, error)
         continue
       }
     }
