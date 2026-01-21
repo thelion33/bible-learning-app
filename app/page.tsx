@@ -1,8 +1,16 @@
 import { BookOpen, Youtube, Trophy, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { getServerUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
+  // Redirect authenticated users to dashboard
+  const user = await getServerUser()
+  if (user) {
+    redirect('/dashboard')
+  }
+
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
