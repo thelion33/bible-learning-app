@@ -23,6 +23,9 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
   const [showIntro, setShowIntro] = useState(true)
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
+  const [notes, setNotes] = useState('')
+  const [isSavingNotes, setIsSavingNotes] = useState(false)
+  const [notesSaved, setNotesSaved] = useState(false)
   const router = useRouter()
   const supabase = createClient()
 
@@ -56,6 +59,19 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
 
       if (questionsData) {
         setQuestions(questionsData)
+      }
+
+      // Fetch existing notes if any
+      if (user) {
+        const notesResponse = await fetch(
+          `/api/user/lesson-notes?userId=${user.id}&lessonId=${params.lessonId}`
+        )
+        if (notesResponse.ok) {
+          const notesData = await notesResponse.json()
+          if (notesData.data?.notes) {
+            setNotes(notesData.data.notes)
+          }
+        }
       }
 
       setLoading(false)
@@ -123,6 +139,34 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
         })
       }
       setIsComplete(true)
+    }
+  }
+
+  const handleSaveNotes = async () => {
+    if (!user) return
+
+    setIsSavingNotes(true)
+    setNotesSaved(false)
+
+    try {
+      const response = await fetch('/api/user/lesson-notes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          lessonId: params.lessonId,
+          notes,
+        }),
+      })
+
+      if (response.ok) {
+        setNotesSaved(true)
+        setTimeout(() => setNotesSaved(false), 3000)
+      }
+    } catch (error) {
+      console.error('Error saving notes:', error)
+    } finally {
+      setIsSavingNotes(false)
     }
   }
 
@@ -216,7 +260,34 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
               </div>
             )}
 
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2 sm:pt-4">
+            {/* Notes & Reflections */}
+            <div className="border-t pt-4 sm:pt-6">
+              <h4 className="font-semibold mb-2 sm:mb-3 text-sm sm:text-base text-gray-900">Notes & Reflections</h4>
+              <p className="text-xs sm:text-sm text-gray-600 mb-3">
+                Capture your thoughts, insights, or key takeaways from this lesson.
+              </p>
+              <textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="What did you learn? How will you apply this teaching? Write your reflections here..."
+                className="w-full min-h-[120px] p-3 border border-gray-300 rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-[#003366] focus:border-transparent resize-y"
+              />
+              <div className="flex items-center justify-between mt-3">
+                <span className="text-xs text-gray-500">
+                  {notes.length} characters
+                </span>
+                <Button
+                  onClick={handleSaveNotes}
+                  disabled={isSavingNotes || !notes.trim()}
+                  size="sm"
+                  className="bg-[#003366] hover:bg-[#004080]"
+                >
+                  {isSavingNotes ? 'Saving...' : notesSaved ? '✓ Saved' : 'Save Notes'}
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2 sm:pt-4 border-t">
               <Button
                 variant="outline"
                 className="flex-1 w-full"
