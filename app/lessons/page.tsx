@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { BookOpen, Clock, CheckCircle2, Lock, Calendar, ExternalLink } from 'lucide-react'
+import { BookOpen, Clock, CheckCircle2, Lock, Calendar, ExternalLink, FileText } from 'lucide-react'
 import Link from 'next/link'
 import { getPublishedLessons } from '@/lib/database'
 import { getServerUser } from '@/lib/auth'
@@ -20,6 +20,8 @@ export default async function LessonsPage() {
   
   // Get user's completed lessons
   let completedLessonIds: string[] = []
+  let lessonNotesMap: { [key: string]: boolean } = {}
+  
   if (user) {
     const { data: completions } = await supabaseAdmin
       .from('lesson_completions')
@@ -27,6 +29,19 @@ export default async function LessonsPage() {
       .eq('user_id', user.id)
     
     completedLessonIds = completions?.map(c => c.lesson_id) || []
+
+    // Get lessons with notes
+    const { data: notesData } = await supabaseAdmin
+      .from('lesson_notes')
+      .select('lesson_id, notes')
+      .eq('user_id', user.id)
+    
+    // Create a map of lesson IDs that have notes
+    notesData?.forEach(note => {
+      if (note.notes && note.notes.trim().length > 0) {
+        lessonNotesMap[note.lesson_id] = true
+      }
+    })
   }
 
   return (
@@ -64,6 +79,7 @@ export default async function LessonsPage() {
                   index={index}
                   isLocked={false}
                   isCompleted={completedLessonIds.includes(lesson.id)}
+                  hasNotes={lessonNotesMap[lesson.id] || false}
                 />
               ))}
             </div>
@@ -79,11 +95,13 @@ function LessonCard({
   index,
   isLocked,
   isCompleted,
+  hasNotes,
 }: {
   lesson: any
   index: number
   isLocked: boolean
   isCompleted: boolean
+  hasNotes: boolean
 }) {
   const videoDate = lesson.video?.published_at ? new Date(lesson.video.published_at) : null
   const formattedDate = videoDate ? videoDate.toLocaleDateString('en-US', {
@@ -120,6 +138,18 @@ function LessonCard({
                 <span className="px-2 py-0.5 sm:py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
                   Completed
                 </span>
+              )}
+              {hasNotes && (
+                <Link 
+                  href={`/learn/${lesson.id}?view=notes`}
+                  className="group"
+                  title="View your notes"
+                >
+                  <div className="flex items-center space-x-1 px-2 py-0.5 sm:py-1 bg-blue-100 text-[#003366] hover:bg-blue-200 text-xs font-semibold rounded-full transition-colors">
+                    <FileText className="w-3 h-3" />
+                    <span>Notes</span>
+                  </div>
+                </Link>
               )}
             </div>
             <CardTitle className="text-lg sm:text-xl mb-2 sm:mb-3 leading-snug">{lesson.title}</CardTitle>

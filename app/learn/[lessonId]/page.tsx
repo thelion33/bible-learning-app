@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase-browser'
 import { MultipleChoice } from '@/components/questions/MultipleChoice'
 import { FillInBlank } from '@/components/questions/FillInBlank'
@@ -25,8 +25,9 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
   const [user, setUser] = useState<any>(null)
   const [notes, setNotes] = useState('')
   const [isSavingNotes, setIsSavingNotes] = useState(false)
-  const [notesSaved, setNotesSaved] = useState(false)
+  const [lastSaved, setLastSaved] = useState<Date | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const supabase = createClient()
 
   useEffect(() => {
@@ -74,11 +75,48 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
         }
       }
 
+      // Check if user wants to view notes directly
+      const view = searchParams?.get('view')
+      if (view === 'notes') {
+        setShowIntro(false)
+        setIsComplete(true)
+      }
+
       setLoading(false)
     }
 
     loadData()
-  }, [params.lessonId, router, supabase])
+  }, [params.lessonId, router, supabase, searchParams])
+
+  // Auto-save notes with debouncing
+  useEffect(() => {
+    if (!user || !notes) return
+
+    const timeoutId = setTimeout(async () => {
+      setIsSavingNotes(true)
+      try {
+        const response = await fetch('/api/user/lesson-notes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: user.id,
+            lessonId: params.lessonId,
+            notes,
+          }),
+        })
+
+        if (response.ok) {
+          setLastSaved(new Date())
+        }
+      } catch (error) {
+        console.error('Error auto-saving notes:', error)
+      } finally {
+        setIsSavingNotes(false)
+      }
+    }, 1000) // Auto-save 1 second after user stops typing
+
+    return () => clearTimeout(timeoutId)
+  }, [notes, user, params.lessonId])
 
   const handleAnswer = async (isCorrect: boolean) => {
     const currentQuestion = questions[currentQuestionIndex]
@@ -142,33 +180,6 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
     }
   }
 
-  const handleSaveNotes = async () => {
-    if (!user) return
-
-    setIsSavingNotes(true)
-    setNotesSaved(false)
-
-    try {
-      const response = await fetch('/api/user/lesson-notes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: user.id,
-          lessonId: params.lessonId,
-          notes,
-        }),
-      })
-
-      if (response.ok) {
-        setNotesSaved(true)
-        setTimeout(() => setNotesSaved(false), 3000)
-      }
-    } catch (error) {
-      console.error('Error saving notes:', error)
-    } finally {
-      setIsSavingNotes(false)
-    }
-  }
 
   if (loading) {
     return (
@@ -262,7 +273,24 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
 
             {/* Notes & Reflections */}
             <div className="border-t pt-4 sm:pt-6">
-              <h4 className="font-semibold mb-2 sm:mb-3 text-sm sm:text-base text-gray-900">Notes & Reflections</h4>
+              <div className="flex items-center justify-between mb-2 sm:mb-3">
+                <h4 className="font-semibold text-sm sm:text-base text-gray-900">Notes & Reflections</h4>
+                <span className="text-xs text-gray-500">
+                  {isSavingNotes ? (
+                    <span className="flex items-center space-x-1">
+                      <span className="animate-pulse">●</span>
+                      <span>Saving...</span>
+                    </span>
+                  ) : lastSaved ? (
+                    <span className="flex items-center space-x-1 text-green-600">
+                      <span>✓</span>
+                      <span>Saved</span>
+                    </span>
+                  ) : (
+                    notes.length > 0 && <span>Auto-saves as you type</span>
+                  )}
+                </span>
+              </div>
               <p className="text-xs sm:text-sm text-gray-600 mb-3">
                 Capture your thoughts, insights, or key takeaways from this lesson.
               </p>
@@ -272,18 +300,10 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
                 placeholder="What did you learn? How will you apply this teaching? Write your reflections here..."
                 className="w-full min-h-[120px] p-3 border border-gray-300 rounded-lg text-sm sm:text-base focus:ring-2 focus:ring-[#003366] focus:border-transparent resize-y"
               />
-              <div className="flex items-center justify-between mt-3">
+              <div className="flex items-center justify-end mt-2">
                 <span className="text-xs text-gray-500">
                   {notes.length} characters
                 </span>
-                <Button
-                  onClick={handleSaveNotes}
-                  disabled={isSavingNotes || !notes.trim()}
-                  size="sm"
-                  className="bg-[#003366] hover:bg-[#004080]"
-                >
-                  {isSavingNotes ? 'Saving...' : notesSaved ? '✓ Saved' : 'Save Notes'}
-                </Button>
               </div>
             </div>
 
