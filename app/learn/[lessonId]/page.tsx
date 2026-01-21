@@ -160,53 +160,53 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
     const isPerfect = correctAnswers === questions.length
 
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-3 sm:p-4">
         <Card className="max-w-2xl w-full">
-          <CardHeader className="text-center">
-            <div className="mb-6">
+          <CardHeader className="text-center p-4 sm:p-6">
+            <div className="mb-4 sm:mb-6">
               {isPerfect ? (
-                <div className="bg-yellow-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto">
-                  <Trophy className="w-12 h-12 text-yellow-600" />
+                <div className="bg-yellow-100 w-16 h-16 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto">
+                  <Trophy className="w-8 h-8 sm:w-12 sm:h-12 text-yellow-600" />
                 </div>
               ) : (
-                <div className="bg-blue-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto">
-                  <Star className="w-12 h-12 text-[#003366]" />
+                <div className="bg-blue-100 w-16 h-16 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto">
+                  <Star className="w-8 h-8 sm:w-12 sm:h-12 text-[#003366]" />
                 </div>
               )}
             </div>
-            <CardTitle className="text-3xl mb-2">
+            <CardTitle className="text-2xl sm:text-3xl mb-2">
               {isPerfect ? 'Perfect Score!' : 'Lesson Complete!'}
             </CardTitle>
-            <CardDescription className="text-lg">
+            <CardDescription className="text-base sm:text-lg px-2">
               {isPerfect
                 ? 'Amazing work! You got every question right!'
                 : `You got ${correctAnswers} out of ${questions.length} questions correct`}
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-2xl font-bold text-[#003366]">{totalXP}</p>
-                <p className="text-sm text-gray-600">XP Earned</p>
+          <CardContent className="space-y-4 sm:space-y-6 p-4 sm:p-6">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
+              <div className="bg-blue-50 p-2 sm:p-4 rounded-lg">
+                <p className="text-xl sm:text-2xl font-bold text-[#003366]">{totalXP}</p>
+                <p className="text-xs sm:text-sm text-gray-600">XP Earned</p>
               </div>
-              <div className="bg-green-50 p-4 rounded-lg">
-                <p className="text-2xl font-bold text-green-600">{percentage}%</p>
-                <p className="text-sm text-gray-600">Accuracy</p>
+              <div className="bg-green-50 p-2 sm:p-4 rounded-lg">
+                <p className="text-xl sm:text-2xl font-bold text-green-600">{percentage}%</p>
+                <p className="text-xs sm:text-sm text-gray-600">Accuracy</p>
               </div>
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-2xl font-bold text-blue-600">{correctAnswers}/{questions.length}</p>
-                <p className="text-sm text-gray-600">Correct</p>
+              <div className="bg-blue-50 p-2 sm:p-4 rounded-lg">
+                <p className="text-xl sm:text-2xl font-bold text-blue-600">{correctAnswers}/{questions.length}</p>
+                <p className="text-xs sm:text-sm text-gray-600">Correct</p>
               </div>
             </div>
 
             {lesson.key_themes && lesson.key_themes.length > 0 && (
-              <div className="border-t pt-6">
-                <h4 className="font-semibold mb-3 text-gray-900">Key Themes Covered:</h4>
-                <div className="flex flex-wrap gap-2">
+              <div className="border-t pt-4 sm:pt-6">
+                <h4 className="font-semibold mb-2 sm:mb-3 text-sm sm:text-base text-gray-900">Key Themes Covered:</h4>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {lesson.key_themes.map((theme, i) => (
                     <span
                       key={i}
-                      className="px-3 py-1 bg-blue-50 text-[#003366] rounded-full text-sm"
+                      className="px-2 sm:px-3 py-1 bg-blue-50 text-[#003366] rounded-full text-xs sm:text-sm"
                     >
                       {theme}
                     </span>
@@ -215,10 +215,11 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
               </div>
             )}
 
-            <div className="flex gap-3 pt-4">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2 sm:pt-4">
               <Button
                 variant="outline"
-                className="flex-1"
+                className="flex-1 w-full"
+                size="sm"
                 onClick={() => {
                   router.push('/lessons')
                   router.refresh()
@@ -227,7 +228,8 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
                 Back to Lessons
               </Button>
               <Button
-                className="flex-1"
+                className="flex-1 w-full"
+                size="sm"
                 onClick={() => {
                   router.push('/dashboard')
                   router.refresh()
@@ -253,15 +255,15 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
         xp={totalXP}
       />
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-12">
         <div className="max-w-3xl mx-auto">
-          <div className="mb-6">
-            <h1 className="text-xl font-semibold text-gray-700 mb-2">
+          <div className="mb-4 sm:mb-6">
+            <h1 className="text-lg sm:text-xl font-semibold text-gray-700 mb-2 px-1">
               {lesson.title}
             </h1>
           </div>
 
-          <Card className="p-8">
+          <Card className="p-4 sm:p-6 md:p-8">
             {currentQuestion.type === 'multiple_choice' && (
               <MultipleChoice
                 question={currentQuestion.question_text}

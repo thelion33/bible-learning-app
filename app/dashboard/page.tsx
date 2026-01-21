@@ -49,20 +49,20 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-12">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               Welcome back!
             </h1>
-            <p className="text-lg text-gray-600">
+            <p className="text-base sm:text-lg text-gray-600">
               Continue your spiritual growth journey
             </p>
           </div>
 
           {/* Stats Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
             <StatCard
               icon={<Trophy className="w-6 h-6 text-yellow-600" />}
               label="Total XP"
@@ -190,12 +190,12 @@ function StatCard({
 }) {
   return (
     <Card>
-      <CardContent className="pt-6">
-        <div className="flex items-center space-x-4">
-          <div className={`${bgColor} p-3 rounded-lg`}>{icon}</div>
-          <div>
-            <p className="text-sm text-gray-600">{label}</p>
-            <p className="text-2xl font-bold">{value}</p>
+      <CardContent className="pt-4 sm:pt-6 p-3 sm:p-6">
+        <div className="flex flex-col sm:flex-row items-center sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 text-center sm:text-left">
+          <div className={`${bgColor} p-2 sm:p-3 rounded-lg`}>{icon}</div>
+          <div className="min-w-0">
+            <p className="text-xs sm:text-sm text-gray-600 truncate">{label}</p>
+            <p className="text-lg sm:text-xl md:text-2xl font-bold">{value}</p>
           </div>
         </div>
       </CardContent>
@@ -216,15 +216,15 @@ function AchievementBadge({
 }) {
   return (
     <div
-      className={`p-4 rounded-lg border-2 text-center transition-all ${
+      className={`p-3 sm:p-4 rounded-lg border-2 text-center transition-all ${
         unlocked
           ? 'border-blue-300 bg-blue-50'
           : 'border-gray-200 bg-gray-50 opacity-50'
       }`}
     >
-      <div className="text-3xl mb-2">{icon}</div>
-      <h4 className="font-semibold text-sm mb-1">{name}</h4>
-      <p className="text-xs text-gray-600">{description}</p>
+      <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">{icon}</div>
+      <h4 className="font-semibold text-xs sm:text-sm mb-1">{name}</h4>
+      <p className="text-xs text-gray-600 line-clamp-2">{description}</p>
     </div>
   )
 }

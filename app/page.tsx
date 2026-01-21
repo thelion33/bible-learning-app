@@ -6,26 +6,26 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-[#001f3f] via-[#003366] to-[#001f3f] text-white py-24">
-        <div className="container mx-auto px-4">
+      <div className="bg-gradient-to-br from-[#001f3f] via-[#003366] to-[#001f3f] text-white py-12 sm:py-20 md:py-24">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
               Revival Today
-              <span className="block mt-2">Prosperity Academy</span>
+              <span className="block mt-1 sm:mt-2">Prosperity Academy</span>
             </h1>
-            <p className="text-lg md:text-xl mb-10 text-gray-200 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl mb-8 sm:mb-10 text-gray-200 leading-relaxed max-w-3xl mx-auto px-2">
               Transform church messages into engaging, gamified learning experiences
               for spiritual growth and knowledge retention.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/auth/signup">
-                <Button size="lg" className="text-base px-8 py-6 bg-[#003366] hover:bg-[#004080] text-white font-semibold shadow-lg hover:shadow-xl transition-all">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4">
+              <Link href="/auth/signup" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 bg-[#003366] hover:bg-[#004080] text-white font-semibold shadow-lg hover:shadow-xl transition-all">
                   Get Started Free
                 </Button>
               </Link>
-              <Link href="/lessons">
-                <Button size="lg" className="text-base px-8 py-6 border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#001f3f] font-semibold transition-all">
+              <Link href="/lessons" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-5 sm:py-6 border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#001f3f] font-semibold transition-all">
                   Browse Lessons
                 </Button>
               </Link>
@@ -35,13 +35,13 @@ export default function Home() {
       </div>
 
       {/* Features Section */}
-      <div className="bg-gray-50 py-20">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
+      <div className="bg-gray-50 py-12 sm:py-16 md:py-20">
+        <div className="container mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900 mb-10 sm:mb-12 md:mb-16">
             How It Works
           </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
             <FeatureCard
               icon={<Youtube className="w-12 h-12 text-[#003366]" />}
               title="Auto-Sync Videos"
@@ -67,17 +67,17 @@ export default function Home() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-white py-20 border-t">
-        <div className="container mx-auto px-4">
+      <div className="bg-white py-12 sm:py-16 md:py-20 border-t">
+        <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
               Ready to Start Your Journey?
             </h2>
-            <p className="text-lg text-gray-600 mb-10 leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-600 mb-8 sm:mb-10 leading-relaxed px-2">
               Join us in transforming message content into actionable spiritual learning.
             </p>
             <Link href="/auth/signup">
-              <Button size="lg" className="text-base px-10 py-6 bg-[#003366] hover:bg-[#004080] text-white font-semibold shadow-lg hover:shadow-xl transition-all">
+              <Button size="lg" className="text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 bg-[#003366] hover:bg-[#004080] text-white font-semibold shadow-lg hover:shadow-xl transition-all">
                 Create Your Free Account
               </Button>
             </Link>
