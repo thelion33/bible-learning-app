@@ -215,7 +215,10 @@ function LessonCard({
               Locked
             </Button>
           ) : (
-            <Link href={`/learn/${lesson.id}`} className="w-full sm:w-auto">
+            <Link 
+              href={isCompleted ? `/learn/${lesson.id}?view=notes` : `/learn/${lesson.id}`} 
+              className="w-full sm:w-auto"
+            >
               <Button variant={isCompleted ? 'outline' : 'default'} size="sm" className="w-full sm:w-auto">
                 {isCompleted ? 'Review' : 'Start'}
               </Button>

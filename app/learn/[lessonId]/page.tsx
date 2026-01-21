@@ -73,13 +73,30 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
             setNotes(notesData.data.notes)
           }
         }
-      }
 
-      // Check if user wants to view notes directly
-      const view = searchParams?.get('view')
-      if (view === 'notes') {
-        setShowIntro(false)
-        setIsComplete(true)
+        // Check if lesson is already completed and fetch completion data
+        const { data: completionData } = await supabase
+          .from('lesson_completions')
+          .select('score, xp_earned')
+          .eq('user_id', user.id)
+          .eq('lesson_id', params.lessonId)
+          .maybeSingle()
+
+        // If viewing notes or lesson is completed, load the saved stats
+        const view = searchParams?.get('view')
+        if (completionData && (view === 'notes' || completionData)) {
+          setShowIntro(false)
+          setIsComplete(true)
+          
+          // Restore saved stats
+          setTotalXP(completionData.xp_earned || 0)
+          
+          // Calculate correct answers from score percentage
+          if (questionsData && completionData.score) {
+            const numCorrect = Math.round((completionData.score / 100) * questionsData.length)
+            setCorrectAnswers(numCorrect)
+          }
+        }
       }
 
       setLoading(false)
@@ -308,6 +325,21 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
             </div>
 
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-2 sm:pt-4 border-t">
+              <Button
+                variant="outline"
+                className="flex-1 w-full"
+                size="sm"
+                onClick={() => {
+                  // Reset state and retake lesson
+                  setIsComplete(false)
+                  setShowIntro(true)
+                  setCurrentQuestionIndex(0)
+                  setTotalXP(0)
+                  setCorrectAnswers(0)
+                }}
+              >
+                Retake Lesson
+              </Button>
               <Button
                 variant="outline"
                 className="flex-1 w-full"
