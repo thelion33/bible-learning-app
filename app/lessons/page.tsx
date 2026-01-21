@@ -31,18 +31,24 @@ export default async function LessonsPage() {
     completedLessonIds = completions?.map(c => c.lesson_id) || []
 
     // Get lessons with notes
-    const { data: notesData } = await supabaseAdmin
+    const { data: notesData, error: notesError } = await supabaseAdmin
       .from('lesson_notes')
       .select('lesson_id, notes')
       .eq('user_id', user.id)
+    
+    console.log('Notes data:', notesData)
+    console.log('Notes error:', notesError)
     
     // Create a map of lesson IDs that have notes
     notesData?.forEach(note => {
       if (note.notes && note.notes.trim().length > 0) {
         lessonNotesMap[note.lesson_id] = true
+        console.log('Lesson has notes:', note.lesson_id)
       }
     })
   }
+
+  console.log('Lesson notes map:', lessonNotesMap)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -72,16 +78,20 @@ export default async function LessonsPage() {
             </Card>
           ) : (
             <div className="space-y-3 sm:space-y-4">
-              {lessons.map((lesson, index) => (
-                <LessonCard
-                  key={lesson.id}
-                  lesson={lesson}
-                  index={index}
-                  isLocked={false}
-                  isCompleted={completedLessonIds.includes(lesson.id)}
-                  hasNotes={lessonNotesMap[lesson.id] || false}
-                />
-              ))}
+              {lessons.map((lesson, index) => {
+                const hasNotes = lessonNotesMap[lesson.id] || false
+                console.log(`Lesson ${lesson.id} hasNotes:`, hasNotes)
+                return (
+                  <LessonCard
+                    key={lesson.id}
+                    lesson={lesson}
+                    index={index}
+                    isLocked={false}
+                    isCompleted={completedLessonIds.includes(lesson.id)}
+                    hasNotes={hasNotes}
+                  />
+                )
+              })}
             </div>
           )}
         </div>
@@ -142,12 +152,12 @@ function LessonCard({
               {hasNotes && (
                 <Link 
                   href={`/learn/${lesson.id}?view=notes`}
-                  className="group"
+                  className="group inline-block"
                   title="View your notes"
                 >
-                  <div className="flex items-center space-x-1 px-2 py-0.5 sm:py-1 bg-blue-100 text-[#003366] hover:bg-blue-200 text-xs font-semibold rounded-full transition-colors">
-                    <FileText className="w-3 h-3" />
-                    <span>Notes</span>
+                  <div className="flex items-center space-x-1 px-2.5 py-1 bg-[#003366] text-white hover:bg-[#004080] text-xs font-semibold rounded-full transition-colors shadow-sm">
+                    <FileText className="w-3.5 h-3.5" />
+                    <span>View Notes</span>
                   </div>
                 </Link>
               )}
