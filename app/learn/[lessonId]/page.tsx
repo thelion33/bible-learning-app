@@ -20,6 +20,7 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
   const [totalXP, setTotalXP] = useState(0)
   const [correctAnswers, setCorrectAnswers] = useState(0)
   const [isComplete, setIsComplete] = useState(false)
+  const [showIntro, setShowIntro] = useState(true)
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
   const router = useRouter()
@@ -241,6 +242,101 @@ export default function LearnPage({ params }: { params: { lessonId: string } }) 
             </div>
           </CardContent>
         </Card>
+      </div>
+    )
+  }
+
+  // Show intro screen before questions
+  if (showIntro) {
+    const estimatedTime = Math.ceil(questions.length * 1.5) // ~1.5 min per question
+    
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-12">
+          <div className="max-w-3xl mx-auto">
+            <Card>
+              <CardHeader className="p-4 sm:p-6">
+                <div className="flex items-start space-x-3 mb-4">
+                  <div className="bg-blue-100 p-2 sm:p-3 rounded-lg">
+                    <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-[#003366]" />
+                  </div>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl sm:text-2xl mb-2">{lesson.title}</CardTitle>
+                    <CardDescription className="text-sm sm:text-base">
+                      Lesson Overview
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              
+              <CardContent className="p-4 sm:p-6 space-y-6">
+                {/* Summary */}
+                {lesson.summary && (
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">Message Summary</h3>
+                    <p className="text-sm sm:text-base text-gray-700 leading-relaxed">{lesson.summary}</p>
+                  </div>
+                )}
+
+                {/* Key Themes */}
+                {lesson.key_themes && lesson.key_themes.length > 0 && (
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-3 text-sm sm:text-base">Key Topics You&apos;ll Learn</h3>
+                    <div className="space-y-2">
+                      {lesson.key_themes.map((theme, i) => (
+                        <div key={i} className="flex items-start space-x-2">
+                          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#003366] mt-2 flex-shrink-0" />
+                          <p className="text-sm sm:text-base text-gray-700">{theme}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Scripture References */}
+                {lesson.scripture_references && lesson.scripture_references.length > 0 && (
+                  <div>
+                    <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">Scripture References</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {lesson.scripture_references.map((ref, i) => (
+                        <span
+                          key={i}
+                          className="px-2 sm:px-3 py-1 bg-blue-50 text-[#003366] rounded-full text-xs sm:text-sm font-medium"
+                        >
+                          {ref}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Lesson Stats */}
+                <div className="border-t pt-6">
+                  <div className="grid grid-cols-2 gap-4 text-center">
+                    <div className="bg-blue-50 p-3 sm:p-4 rounded-lg">
+                      <p className="text-xl sm:text-2xl font-bold text-[#003366]">{questions.length}</p>
+                      <p className="text-xs sm:text-sm text-gray-600">Questions</p>
+                    </div>
+                    <div className="bg-green-50 p-3 sm:p-4 rounded-lg">
+                      <p className="text-xl sm:text-2xl font-bold text-green-600">~{estimatedTime} min</p>
+                      <p className="text-xs sm:text-sm text-gray-600">Est. Time</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Begin Button */}
+                <Button
+                  onClick={() => setShowIntro(false)}
+                  className="w-full bg-[#003366] hover:bg-[#004080] text-white py-6 text-base font-semibold"
+                  size="lg"
+                >
+                  Begin Lesson
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     )
   }
