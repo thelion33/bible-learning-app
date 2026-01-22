@@ -135,7 +135,7 @@ export async function GET() {
         const questionsToInsert = content.questions.map((q, index) => ({
           lesson_id: lesson.id,
           type: q.type,
-          question_text: q.question,
+          question_text: q.questionText,
           options: q.options || null,
           correct_answer: q.correctAnswer,
           explanation: q.explanation,
