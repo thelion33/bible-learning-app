@@ -8,16 +8,16 @@ Create a file named `.env.local` in the project root:
 
 ```env
 # Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL=your-supabase-url-here
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key-here
-SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key-here
+NEXT_PUBLIC_SUPABASE_URL=https://scbasvzgetfhponuplrc.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_rseDnFrqMaB6P5kZ6uEchQ_35j0cDoI
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_3TZPcX4S8JSIKAzJ8Bxrtg_YX6bGHTL
 
 # OpenAI Configuration
-OPENAI_API_KEY=your-openai-api-key-here
+OPENAI_API_KEY=sk-proj-YOUR_OPENAI_API_KEY_HERE
 
 # YouTube Data API v3
-YOUTUBE_API_KEY=your-youtube-api-key-here
-YOUTUBE_CHANNEL_ID=your-youtube-channel-id-here
+YOUTUBE_API_KEY=AIzaSyAf8KFT1LO9YOPleEcV05V0iqj1MQom-b4
+YOUTUBE_CHANNEL_ID=UC3NVnOTlGccCLaVjng7_FWA
 
 # App Configuration
 NEXT_PUBLIC_APP_URL=http://localhost:3000

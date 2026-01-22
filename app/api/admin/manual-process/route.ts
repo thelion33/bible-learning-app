@@ -8,6 +8,7 @@ import { fetchLatestStreams } from '@/lib/youtube'
 import { generateLearningContent } from '@/lib/openai'
 import { getVideoTranscript } from '@/lib/youtube'
 import { createClient } from '@supabase/supabase-js'
+import { sendBulkNewLessonEmails } from '@/lib/email'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -45,6 +46,8 @@ export async function GET() {
 
     const newVideos = []
     const newLessons = []
+    let totalEmailsSent = 0
+    let totalEmailsFailed = 0
 
     for (const video of videos) {
       try {
@@ -155,6 +158,45 @@ export async function GET() {
         newLessons.push(lesson)
         console.log(`✅ Created lesson: ${lesson.title}`)
 
+        // Send email notifications to all users
+        console.log(`📧 Sending email notifications...`)
+        try {
+          // Fetch all user emails from auth.users
+          const { data: users, error: usersError } = await supabaseAdmin.auth.admin.listUsers()
+          
+          if (usersError) {
+            console.error('❌ Error fetching users for email:', usersError)
+          } else if (users && users.users.length > 0) {
+            const userEmails = users.users
+              .map(u => u.email)
+              .filter((email): email is string => !!email)
+
+            if (userEmails.length > 0) {
+              const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://bible-learning-app-production.up.railway.app'
+              
+              const emailResult = await sendBulkNewLessonEmails(userEmails, {
+                lessonId: lesson.id,
+                lessonTitle: lesson.title,
+                summary: lesson.summary,
+                videoTitle: video.title,
+                publishedAt: video.publishedAt,
+                appUrl,
+              })
+
+              totalEmailsSent += emailResult.sent
+              totalEmailsFailed += emailResult.failed
+              
+              console.log(`   ✅ Sent ${emailResult.sent} emails, ${emailResult.failed} failed`)
+            } else {
+              console.log('   ⚠️  No user emails found')
+            }
+          } else {
+            console.log('   ℹ️  No registered users yet')
+          }
+        } catch (emailError: any) {
+          console.error('❌ Error sending emails:', emailError)
+        }
+
         // Mark video as processed
         await supabaseAdmin
           .from('videos')
@@ -170,12 +212,15 @@ export async function GET() {
     console.log('🎉 Manual processing complete!')
     console.log(`   📺 New videos: ${newVideos.length}`)
     console.log(`   📚 Lessons created: ${newLessons.length}`)
+    console.log(`   📧 Emails sent: ${totalEmailsSent}, failed: ${totalEmailsFailed}`)
 
     return NextResponse.json({
       success: true,
       timestamp: new Date().toISOString(),
       newVideosFound: newVideos.length,
       lessonsCreated: newLessons.length,
+      emailsSent: totalEmailsSent,
+      emailsFailed: totalEmailsFailed,
       videos: newVideos.map(v => ({ id: v.id, title: v.title })),
       lessons: newLessons.map(l => ({ id: l.id, title: l.title })),
     })

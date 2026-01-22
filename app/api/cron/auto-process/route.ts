@@ -11,6 +11,7 @@ import { fetchLatestStreams } from '@/lib/youtube'
 import { generateLearningContent } from '@/lib/openai'
 import { getVideoTranscript } from '@/lib/youtube'
 import { createClient } from '@supabase/supabase-js'
+import { sendBulkNewLessonEmails } from '@/lib/email'
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -48,6 +49,8 @@ export async function GET(request: Request) {
     
     const newVideos: Array<{ id: string; title: string }> = []
     const processedLessons: Array<{ title: string; questionsCount: number }> = []
+    let totalEmailsSent = 0
+    let totalEmailsFailed = 0
 
     for (const video of videos) {
       // Check if video already exists
@@ -158,6 +161,40 @@ export async function GET(request: Request) {
           questionsCount: content.questions.length,
         })
 
+        // Send email notifications to all users
+        console.log(`  📧 Sending email notifications...`)
+        try {
+          const { data: users, error: usersError } = await supabaseAdmin.auth.admin.listUsers()
+          
+          if (usersError) {
+            console.error('  ❌ Error fetching users for email:', usersError)
+          } else if (users && users.users.length > 0) {
+            const userEmails = users.users
+              .map(u => u.email)
+              .filter((email): email is string => !!email)
+
+            if (userEmails.length > 0) {
+              const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://bible-learning-app-production.up.railway.app'
+              
+              const emailResult = await sendBulkNewLessonEmails(userEmails, {
+                lessonId: lesson.id,
+                lessonTitle: lesson.title,
+                summary: lesson.summary,
+                videoTitle: video.title,
+                publishedAt: video.publishedAt,
+                appUrl,
+              })
+
+              totalEmailsSent += emailResult.sent
+              totalEmailsFailed += emailResult.failed
+              
+              console.log(`  ✅ Sent ${emailResult.sent} emails, ${emailResult.failed} failed`)
+            }
+          }
+        } catch (emailError: any) {
+          console.error('  ❌ Error sending emails:', emailError)
+        }
+
       } catch (processError) {
         console.error(`  ❌ Error processing video ${video.title}:`, processError)
         // Continue with next video even if this one fails
@@ -169,6 +206,8 @@ export async function GET(request: Request) {
       timestamp: new Date().toISOString(),
       newVideosFound: newVideos.length,
       lessonsCreated: processedLessons.length,
+      emailsSent: totalEmailsSent,
+      emailsFailed: totalEmailsFailed,
       videos: newVideos,
       lessons: processedLessons,
     }
@@ -176,6 +215,7 @@ export async function GET(request: Request) {
     console.log('🎉 Auto-process completed!')
     console.log(`  📺 New videos: ${newVideos.length}`)
     console.log(`  📚 Lessons created: ${processedLessons.length}`)
+    console.log(`  📧 Emails sent: ${totalEmailsSent}, failed: ${totalEmailsFailed}`)
 
     return NextResponse.json(summary)
 

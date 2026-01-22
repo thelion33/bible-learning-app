@@ -74,7 +74,7 @@ export default function SignUpPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-50 to-white px-4">
         <Card className="w-full max-w-md">
           <CardHeader>
             <div className="flex items-center justify-center mb-4">
@@ -93,12 +93,12 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-purple-50 to-white px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-center mb-4">
-            <div className="bg-blue-100 p-3 rounded-full">
-              <BookOpen className="w-8 h-8 text-[#003366]" />
+            <div className="bg-purple-100 p-3 rounded-full">
+              <BookOpen className="w-8 h-8 text-purple-600" />
             </div>
           </div>
           <CardTitle className="text-2xl text-center">Create Account</CardTitle>
@@ -164,7 +164,7 @@ export default function SignUpPage() {
             </Button>
             <p className="text-sm text-center text-gray-600">
               Already have an account?{' '}
-              <Link href="/auth/login" className="text-[#003366] hover:underline font-medium">
+              <Link href="/auth/login" className="text-purple-600 hover:underline font-medium">
                 Sign in
               </Link>
             </p>
