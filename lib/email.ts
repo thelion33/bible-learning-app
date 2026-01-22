@@ -4,7 +4,10 @@
 
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Lazy initialization to avoid build-time errors
+function getResendClient() {
+  return new Resend(process.env.RESEND_API_KEY)
+}
 
 interface NewLessonEmailData {
   lessonId: string
@@ -30,6 +33,7 @@ export async function sendNewLessonEmail(
       day: 'numeric',
     })
 
+    const resend = getResendClient()
     const { error } = await resend.emails.send({
       from: 'Revival Today Prosperity Academy <hello@prosperity.academy>',
       to: toEmail,
